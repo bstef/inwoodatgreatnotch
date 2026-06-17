@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Photo gallery for Inwood at Great Notch — townhouses and apartments in Little Falls, NJ 07424." />
+<title>Gallery | Inwood at Great Notch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1E3A2F;
+    --forest-mid: #2D5445;
+    --forest-light: #3B6B57;
+    --sage: #E8EDE9;
+    --sage-mid: #D0DAD2;
+    --gold: #C8A96E;
+    --gold-light: #E2C99A;
+    --cream: #F5F2EE;
+    --white: #FFFFFF;
+    --slate: #4A5568;
+    --slate-light: #718096;
+    --text: #1A1F1C;
+    --nav-h: 72px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: var(--nav-h);
+    background: rgba(30, 58, 47, 0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    border-bottom: 1px solid rgba(200, 169, 110, 0.2);
+  }
+  .nav-brand { display: flex; flex-direction: column; line-height: 1.15; text-decoration: none; }
+  .nav-brand-top { font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 600; color: var(--cream); letter-spacing: 0.01em; }
+  .nav-brand-sub { font-size: 0.68rem; font-weight: 400; color: var(--gold-light); letter-spacing: 0.12em; text-transform: uppercase; }
+
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(245,242,238,0.75); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--gold-light); }
+  .nav-cta { background: var(--gold) !important; color: var(--forest) !important; padding: 0.5rem 1.25rem; border-radius: 3px; font-weight: 600 !important; letter-spacing: 0.04em !important; }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--forest) !important; }
+
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle span { display: block; width: 22px; height: 1.5px; background: var(--cream); margin: 5px 0; }
+
+  /* ── PAGE HEADER ── */
+  .page-header {
+    padding-top: calc(var(--nav-h) + 4rem);
+    padding-bottom: 3rem;
+    padding-left: clamp(1.5rem, 5vw, 4rem);
+    padding-right: clamp(1.5rem, 5vw, 4rem);
+    background: var(--forest);
+    position: relative; overflow: hidden;
+  }
+  .page-header-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(200,169,110,0.8) 39px, rgba(200,169,110,0.8) 40px), repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(200,169,110,0.8) 39px, rgba(200,169,110,0.8) 40px);
+  }
+  .page-header-inner { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .page-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+  .page-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+  .page-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 400; color: var(--cream); line-height: 1.1; }
+  .page-title em { font-style: italic; color: var(--gold-light); }
+  .page-sub { font-size: 0.95rem; color: rgba(245,242,238,0.6); margin-top: 0.75rem; font-weight: 300; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--gold-light); text-decoration: none; margin-bottom: 1.5rem; opacity: 0.75; transition: opacity 0.2s; }
+  .back-link:hover { opacity: 1; }
+
+  /* ── FILTER BAR ── */
+  .filter-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--sage-mid);
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    position: sticky; top: var(--nav-h); z-index: 50;
+  }
+  .filter-bar-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; align-items: center; gap: 0.5rem;
+    overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+    padding: 1rem 0;
+  }
+  .filter-bar-inner::-webkit-scrollbar { display: none; }
+
+  .filter-btn {
+    flex-shrink: 0;
+    padding: 0.45rem 1.1rem; border-radius: 3px; border: 1.5px solid var(--sage-mid);
+    background: transparent; color: var(--slate); font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.05em; text-transform: uppercase; cursor: pointer;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: all 0.18s;
+  }
+  .filter-btn:hover { border-color: var(--forest); color: var(--forest); }
+  .filter-btn.active { background: var(--forest); border-color: var(--forest); color: var(--cream); }
+
+  .filter-count {
+    margin-left: auto; flex-shrink: 0;
+    font-size: 0.75rem; color: var(--slate-light);
+    white-space: nowrap;
+  }
+
+  /* ── GALLERY GRID ── */
+  .gallery-section {
+    padding: 3rem clamp(1.5rem, 5vw, 4rem) 5rem;
+  }
+  .gallery-inner { max-width: 1100px; margin: 0 auto; }
+
+  .gallery-grid {
+    columns: 3; column-gap: 12px;
+  }
+  @media (max-width: 900px) { .gallery-grid { columns: 2; } }
+  @media (max-width: 500px) { .gallery-grid { columns: 1; } }
+
+  .gallery-item {
+    break-inside: avoid;
+    margin-bottom: 12px;
+    position: relative; overflow: hidden; border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    transition: opacity 0.3s;
+  }
+  .gallery-item.hidden { display: none; }
+
+  .gallery-item img {
+    width: 100%; display: block; border-radius: 5px;
+    transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+
+  .gallery-item-overlay {
+    position: absolute; inset: 0; border-radius: 5px;
+    background: linear-gradient(to top, rgba(30,58,47,0.75) 0%, transparent 60%);
+    opacity: 0; transition: opacity 0.3s;
+    display: flex; align-items: flex-end; padding: 1rem;
+  }
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+  .gallery-item-label {
+    font-size: 0.8rem; font-weight: 500; color: var(--cream);
+    letter-spacing: 0.04em;
+  }
+  .gallery-item-zoom {
+    position: absolute; top: 0.75rem; right: 0.75rem;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.15); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s;
+    color: white;
+  }
+  .gallery-item:hover .gallery-item-zoom { opacity: 1; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(10, 20, 15, 0.95);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.25s;
+  }
+  .lightbox.open { opacity: 1; pointer-events: all; }
+
+  .lightbox-img-wrap {
+    position: relative; max-width: min(90vw, 1100px); max-height: 85vh;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lightbox-img {
+    max-width: 100%; max-height: 85vh;
+    object-fit: contain; border-radius: 4px;
+    transition: opacity 0.2s;
+  }
+  .lightbox-img.fading { opacity: 0; }
+
+  .lightbox-caption {
+    position: absolute; bottom: -2.5rem; left: 0; right: 0; text-align: center;
+    font-size: 0.82rem; font-weight: 400; color: rgba(245,242,238,0.55);
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  .lightbox-close {
+    position: fixed; top: 1.5rem; right: 1.5rem;
+    width: 44px; height: 44px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.2);
+    color: var(--cream); font-size: 1.3rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    font-family: 'Inter', sans-serif; font-weight: 300; line-height: 1;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+
+  .lightbox-nav {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    background: rgba(255,255,255,0.08); border: 1.5px solid rgba(255,255,255,0.15);
+    color: var(--cream); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .lightbox-nav:hover { background: rgba(255,255,255,0.18); }
+  .lightbox-prev { left: 1.5rem; }
+  .lightbox-next { right: 1.5rem; }
+
+  .lightbox-counter {
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    font-size: 0.75rem; color: rgba(245,242,238,0.45);
+    letter-spacing: 0.1em;
+  }
+
+  .lightbox-strip {
+    position: fixed; bottom: 3.5rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 6px; align-items: center;
+    max-width: min(90vw, 700px); overflow: hidden;
+  }
+  .strip-thumb {
+    width: 52px; height: 36px; object-fit: cover; border-radius: 3px;
+    opacity: 0.45; cursor: pointer; flex-shrink: 0;
+    border: 1.5px solid transparent; transition: opacity 0.2s, border-color 0.2s;
+  }
+  .strip-thumb.active { opacity: 1; border-color: var(--gold); }
+  .strip-thumb:hover { opacity: 0.8; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest);
+    padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand { font-family: 'Playfair Display', Georgia, serif; font-size: 1rem; font-weight: 600; color: var(--cream); }
+  .footer-copy { font-size: 0.75rem; color: rgba(245,242,238,0.4); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a { font-size: 0.75rem; color: rgba(245,242,238,0.5); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--gold-light); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .nav-links.open { display: flex; flex-direction: column; align-items: flex-start; position: fixed; top: var(--nav-h); left: 0; right: 0; background: rgba(30, 58, 47, 0.98); padding: 1.5rem 2rem; gap: 1.25rem; }
+    .lightbox-nav { display: none; }
+    .lightbox-strip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav role="navigation" aria-label="Main">
+  <a href="inwood-at-great-notch.html" class="nav-brand">
+    <span class="nav-brand-top">Inwood at Great Notch</span>
+    <span class="nav-brand-sub">Little Falls, NJ</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="inwood-at-great-notch.html#about">About</a></li>
+    <li><a href="inwood-at-great-notch.html#amenities">Amenities</a></li>
+    <li><a href="inwood-at-great-notch.html#location">Location</a></li>
+    <li><a href="gallery.html" class="active">Gallery</a></li>
+    <li><a href="inwood-at-great-notch.html#residents">Residents</a></li>
+    <li><a href="inwood-at-great-notch.html#contact">Contact</a></li>
+    <li><a href="https://portal.cp-management.com/public" target="_blank" rel="noopener" class="nav-cta">Resident Portal</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── PAGE HEADER ── -->
+<header class="page-header">
+  <div class="page-header-pattern" aria-hidden="true"></div>
+  <div class="page-header-inner">
+    <a href="inwood-at-great-notch.html" class="back-link">
+      ← Back to Home
+    </a>
+    <p class="page-eyebrow">Photo Gallery</p>
+    <h1 class="page-title">Life at <em>Inwood</em></h1>
+    <p class="page-sub">Explore our community — grounds, amenities, residences, and more.</p>
+  </div>
+</header>
+
+<!-- ── FILTER BAR ── -->
+<div class="filter-bar" role="navigation" aria-label="Gallery filters">
+  <div class="filter-bar-inner">
+    <button class="filter-btn active" data-filter="all">All Photos</button>
+    <button class="filter-btn" data-filter="entrance">Entrance</button>
+    <button class="filter-btn" data-filter="grounds">Grounds</button>
+    <button class="filter-btn" data-filter="pool">Pool</button>
+    <button class="filter-btn" data-filter="courts">Courts</button>
+    <button class="filter-btn" data-filter="living">Living</button>
+    <button class="filter-btn" data-filter="playground">Playground</button>
+    <span class="filter-count" id="filterCount">20 photos</span>
+  </div>
+</div>
+
+<!-- ── GALLERY GRID ── -->
+<main class="gallery-section">
+  <div class="gallery-inner">
+    <div class="gallery-grid" id="galleryGrid">
+
+      <div class="gallery-item" data-category="entrance" data-label="Address Marker" data-index="0">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/address.jpg" alt="181 Long Hill Road, Little Falls, NJ 07424" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">181 Long Hill Road</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="entrance" data-label="Community Entrance" data-index="1">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-entrance-2.jpg" alt="Inwood entrance" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Community Entrance</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="entrance" data-label="Entrance Drive" data-index="2">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-entrance.jpg" alt="Inwood entrance drive" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Entrance Drive</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="entrance" data-label="Entrance View" data-index="3">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-entrance-3.jpg" alt="Inwood entrance view" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Entrance View</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="courts" data-label="Tennis Courts" data-index="4">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/tennis.jpg" alt="Inwood tennis courts" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Tennis Courts</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="courts" data-label="Basketball Court" data-index="5">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/basketball.jpg" alt="Inwood basketball court" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Basketball Court</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="grounds" data-label="Community Grounds" data-index="6">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-grounds.jpg" alt="Inwood community grounds" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Community Grounds</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="grounds" data-label="Park-Like Grounds" data-index="7">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-grounds-4.jpg" alt="Park-like grounds at Inwood" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Park-Like Grounds</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="living" data-label="Living at Inwood" data-index="8">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/living-at-inwood.jpg" alt="Living at Inwood" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Living at Inwood</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="pool" data-label="Community Pool" data-index="9">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/pool.jpg" alt="Inwood community pool" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Community Pool</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="pool" data-label="Pool Area" data-index="10">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/pool-2.jpg" alt="Inwood pool area" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Pool Area</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="pool" data-label="Pool Deck" data-index="11">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/pool-3.jpg" alt="Inwood pool deck" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Pool Deck</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="pool" data-label="Pool — Summer View" data-index="12">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/pool-4.jpg" alt="Inwood pool summer view" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Pool — Summer View</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="pool" data-label="Pool Seating" data-index="13">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/pool-5.jpg" alt="Inwood pool seating" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Pool Seating</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="pool" data-label="Poolside" data-index="14">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/pool-6.jpg" alt="Inwood poolside" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Poolside</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="grounds" data-label="Grounds Overview" data-index="15">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-grounds-2.jpg" alt="Inwood grounds overview" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Grounds Overview</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="grounds" data-label="Landscaping" data-index="16">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-grounds-3.jpg" alt="Inwood landscaping" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Landscaping</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="living" data-label="Residence Exterior" data-index="17">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/living-at-inwood-1.jpg" alt="Inwood residence exterior" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Residence Exterior</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="living" data-label="Townhouse Living" data-index="18">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/living-at-inwood-2.jpg" alt="Townhouse living at Inwood" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Townhouse Living</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+      <div class="gallery-item" data-category="playground" data-label="Children's Playground" data-index="19">
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/playground-inwood.jpg" alt="Children's playground at Inwood" loading="lazy" />
+        <div class="gallery-item-overlay"><span class="gallery-item-label">Children's Playground</span></div>
+        <div class="gallery-item-zoom" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<!-- ── LIGHTBOX ── -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lightbox-close" id="lbClose" aria-label="Close photo viewer">&#x2715;</button>
+  <button class="lightbox-nav lightbox-prev" id="lbPrev" aria-label="Previous photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="lightbox-img-wrap">
+    <img class="lightbox-img" id="lbImg" src="" alt="" />
+    <p class="lightbox-caption" id="lbCaption"></p>
+  </div>
+  <button class="lightbox-nav lightbox-next" id="lbNext" aria-label="Next photo">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+  <div class="lightbox-strip" id="lbStrip" aria-hidden="true"></div>
+  <p class="lightbox-counter" id="lbCounter"></p>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <p class="footer-brand">Inwood at Great Notch</p>
+    <p class="footer-copy">181 Long Hill Road · Little Falls, NJ 07424</p>
+  </div>
+  <div class="footer-links">
+    <a href="https://portal.cp-management.com/public" target="_blank" rel="noopener">Resident Portal</a>
+    <a href="https://www.cp-management.com/" target="_blank" rel="noopener">CP Management</a>
+    <a href="inwood-at-great-notch.html#contact">Contact</a>
+  </div>
+  <p class="footer-copy">© 2024 Inwood at Great Notch</p>
+</footer>
+
+<script>
+/* ── NAV TOGGLE ── */
+const toggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+
+/* ── GALLERY DATA ── */
+const items = Array.from(document.querySelectorAll('.gallery-item'));
+const allPhotos = items.map(el => ({
+  el,
+  src: el.querySelector('img').src,
+  alt: el.querySelector('img').alt,
+  label: el.dataset.label,
+  cat: el.dataset.category
+}));
+
+/* ── FILTER ── */
+const filterBtns = document.querySelectorAll('.filter-btn');
+const countEl = document.getElementById('filterCount');
+let activeFilter = 'all';
+let visiblePhotos = [...allPhotos];
+
+function applyFilter(filter) {
+  activeFilter = filter;
+  filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+  visiblePhotos = filter === 'all' ? [...allPhotos] : allPhotos.filter(p => p.cat === filter);
+  items.forEach(el => {
+    const show = filter === 'all' || el.dataset.category === filter;
+    el.classList.toggle('hidden', !show);
+  });
+  const n = visiblePhotos.length;
+  countEl.textContent = n + ' photo' + (n !== 1 ? 's' : '');
+}
+
+filterBtns.forEach(btn => {
+  btn.addEventListener('click', () => applyFilter(btn.dataset.filter));
+});
+
+/* ── LIGHTBOX ── */
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCaption = document.getElementById('lbCaption');
+const lbCounter = document.getElementById('lbCounter');
+const lbStrip = document.getElementById('lbStrip');
+const lbClose = document.getElementById('lbClose');
+const lbPrev = document.getElementById('lbPrev');
+const lbNext = document.getElementById('lbNext');
+let currentIdx = 0;
+
+function buildStrip() {
+  lbStrip.innerHTML = '';
+  visiblePhotos.forEach((p, i) => {
+    const img = document.createElement('img');
+    img.src = p.src; img.alt = p.alt;
+    img.className = 'strip-thumb' + (i === currentIdx ? ' active' : '');
+    img.addEventListener('click', () => showPhoto(i));
+    lbStrip.appendChild(img);
+  });
+}
+
+function showPhoto(idx) {
+  currentIdx = idx;
+  const p = visiblePhotos[idx];
+  lbImg.classList.add('fading');
+  setTimeout(() => {
+    lbImg.src = p.src; lbImg.alt = p.alt;
+    lbCaption.textContent = p.label;
+    lbCounter.textContent = (idx + 1) + ' / ' + visiblePhotos.length;
+    lbImg.classList.remove('fading');
+  }, 180);
+  document.querySelectorAll('.strip-thumb').forEach((t, i) => t.classList.toggle('active', i === idx));
+  const thumb = lbStrip.children[idx];
+  if (thumb) thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+}
+
+function openLightbox(idx) {
+  buildStrip();
+  showPhoto(idx);
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+items.forEach(el => {
+  el.addEventListener('click', () => {
+    const globalIdx = parseInt(el.dataset.index, 10);
+    const visIdx = visiblePhotos.findIndex(p => p.el === el);
+    if (visIdx !== -1) openLightbox(visIdx);
+  });
+});
+
+lbClose.addEventListener('click', closeLightbox);
+lb.addEventListener('click', e => { if (e.target === lb) closeLightbox(); });
+lbPrev.addEventListener('click', () => showPhoto((currentIdx - 1 + visiblePhotos.length) % visiblePhotos.length));
+lbNext.addEventListener('click', () => showPhoto((currentIdx + 1) % visiblePhotos.length));
+
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') showPhoto((currentIdx - 1 + visiblePhotos.length) % visiblePhotos.length);
+  if (e.key === 'ArrowRight') showPhoto((currentIdx + 1) % visiblePhotos.length);
+});
+
+/* Touch swipe on lightbox */
+let touchStartX = 0;
+lb.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+lb.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) {
+    dx < 0
+      ? showPhoto((currentIdx + 1) % visiblePhotos.length)
+      : showPhoto((currentIdx - 1 + visiblePhotos.length) % visiblePhotos.length);
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Inwood at Great Notch — Townhouses and Apartments nestled in a park-like setting in Little Falls, NJ 07424." />
+<title>Inwood at Great Notch | Little Falls, NJ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --forest: #1E3A2F;
+    --forest-mid: #2D5445;
+    --forest-light: #3B6B57;
+    --sage: #E8EDE9;
+    --sage-mid: #D0DAD2;
+    --gold: #C8A96E;
+    --gold-light: #E2C99A;
+    --cream: #F5F2EE;
+    --white: #FFFFFF;
+    --slate: #4A5568;
+    --slate-light: #718096;
+    --text: #1A1F1C;
+    --nav-h: 72px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--text);
+    background: var(--cream);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(30, 58, 47, 0.97);
+    backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    border-bottom: 1px solid rgba(200, 169, 110, 0.2);
+  }
+
+  .nav-brand {
+    display: flex; flex-direction: column; line-height: 1.15; text-decoration: none;
+  }
+  .nav-brand-top {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.15rem; font-weight: 600; color: var(--cream); letter-spacing: 0.01em;
+  }
+  .nav-brand-sub {
+    font-size: 0.68rem; font-weight: 400; color: var(--gold-light);
+    letter-spacing: 0.12em; text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem; list-style: none;
+  }
+  .nav-links a {
+    font-size: 0.8rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(245,242,238,0.75); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+
+  .nav-cta {
+    background: var(--gold) !important;
+    color: var(--forest) !important;
+    padding: 0.5rem 1.25rem;
+    border-radius: 3px;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--forest) !important; }
+
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 4px; }
+  .nav-toggle span {
+    display: block; width: 22px; height: 1.5px; background: var(--cream); margin: 5px 0;
+    transition: 0.2s;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    padding-top: var(--nav-h);
+    background: linear-gradient(160deg, var(--forest) 0%, var(--forest-mid) 55%, #2A4A38 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+
+  .hero-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(
+      0deg, transparent, transparent 39px, rgba(200,169,110,0.8) 39px, rgba(200,169,110,0.8) 40px
+    ), repeating-linear-gradient(
+      90deg, transparent, transparent 39px, rgba(200,169,110,0.8) 39px, rgba(200,169,110,0.8) 40px
+    );
+  }
+
+  .hero-content {
+    position: relative; z-index: 1;
+    padding: clamp(3rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem);
+    max-width: 700px;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 28px; height: 1px; background: var(--gold);
+  }
+
+  .hero-headline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.8rem, 7vw, 5rem);
+    font-weight: 400; line-height: 1.1;
+    color: var(--cream); margin-bottom: 0.35em;
+  }
+  .hero-headline em { font-style: italic; color: var(--gold-light); }
+
+  .hero-sub {
+    font-size: 1.05rem; font-weight: 300; line-height: 1.7;
+    color: rgba(245,242,238,0.72); max-width: 520px; margin-bottom: 2.5rem;
+  }
+
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    display: inline-block; padding: 0.85rem 2rem; border-radius: 3px;
+    background: var(--gold); color: var(--forest);
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-outline {
+    display: inline-block; padding: 0.85rem 2rem; border-radius: 3px;
+    border: 1.5px solid rgba(200,169,110,0.5); color: var(--gold-light);
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-stats {
+    position: absolute; bottom: 3rem; right: clamp(1.5rem, 5vw, 4rem);
+    display: flex; gap: 2rem; z-index: 1;
+  }
+  .stat { text-align: right; }
+  .stat-num {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem; font-weight: 400; color: var(--gold); display: block; line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    color: rgba(245,242,238,0.5); display: block; margin-top: 0.2rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 4rem); }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-eyebrow {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem;
+  }
+  .section-eyebrow::before { content: ''; display: block; width: 24px; height: 1px; background: var(--gold); }
+
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 400; line-height: 1.2;
+    color: var(--forest); margin-bottom: 1.25rem;
+  }
+
+  .section-body {
+    font-size: 1rem; font-weight: 400; line-height: 1.8;
+    color: var(--slate); max-width: 600px;
+  }
+
+  /* ── ABOUT ── */
+  #about { background: var(--white); }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    margin-top: 3rem;
+  }
+
+  .about-img-wrap {
+    position: relative; border-radius: 4px; overflow: hidden;
+  }
+  .about-img-accent {
+    position: absolute; top: -1rem; left: -1rem; right: 1rem; bottom: 1rem;
+    border: 1.5px solid var(--gold); border-radius: 4px; z-index: 0;
+  }
+  .about-img {
+    position: relative; z-index: 1;
+    width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 4px;
+    background: var(--sage); display: flex; align-items: center; justify-content: center;
+  }
+
+  .about-photo-placeholder {
+    width: 100%; aspect-ratio: 4/3;
+    background: linear-gradient(135deg, var(--sage) 0%, var(--sage-mid) 100%);
+    border-radius: 4px; position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.5rem; color: var(--forest-light);
+  }
+  .about-photo-placeholder svg { opacity: 0.4; }
+  .about-photo-placeholder span { font-size: 0.75rem; opacity: 0.5; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .about-features { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.75rem; }
+  .feature-row {
+    display: flex; align-items: center; gap: 0.75rem;
+    font-size: 0.9rem; color: var(--slate);
+  }
+  .feature-dot {
+    width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0;
+  }
+
+  /* ── AMENITIES ── */
+  #amenities { background: var(--cream); }
+
+  .amenities-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5px; margin-top: 3rem;
+    border: 1.5px solid var(--sage-mid); border-radius: 6px; overflow: hidden;
+    background: var(--sage-mid);
+  }
+
+  .amenity-card {
+    background: var(--white); padding: 2rem 1.75rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    transition: background 0.2s;
+  }
+  .amenity-card:hover { background: var(--sage); }
+
+  .amenity-icon {
+    width: 44px; height: 44px; border-radius: 3px;
+    background: var(--forest); color: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.3rem;
+  }
+  .amenity-name {
+    font-weight: 600; font-size: 0.95rem; color: var(--forest);
+  }
+  .amenity-desc { font-size: 0.82rem; line-height: 1.6; color: var(--slate-light); }
+
+  /* ── LOCATION ── */
+  #location { background: var(--forest); }
+  #location .section-title { color: var(--cream); }
+  #location .section-body { color: rgba(245,242,238,0.7); }
+  #location .section-eyebrow { color: var(--gold); }
+
+  .location-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    margin-top: 3rem; align-items: start;
+  }
+
+  .location-cards { display: flex; flex-direction: column; gap: 1rem; }
+
+  .location-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(200,169,110,0.18);
+    border-radius: 4px; padding: 1.25rem 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .location-card-icon {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: rgba(200,169,110,0.15); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold); font-size: 1rem;
+  }
+  .location-card-title { font-weight: 600; font-size: 0.9rem; color: var(--cream); margin-bottom: 0.25rem; }
+  .location-card-body { font-size: 0.82rem; color: rgba(245,242,238,0.6); line-height: 1.5; }
+
+  /* map embed handled inline */
+
+  /* ── RESIDENTS PORTAL ── */
+  #residents { background: var(--sage); }
+
+  .portal-card {
+    background: var(--white); border-radius: 6px;
+    border: 1px solid var(--sage-mid);
+    padding: 3rem clamp(2rem, 5vw, 4rem);
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 3rem; align-items: center;
+    margin-top: 3rem;
+  }
+  .portal-card-sub { font-size: 0.85rem; color: var(--slate-light); margin-top: 0.5rem; line-height: 1.6; }
+
+  .portal-links { display: flex; flex-direction: column; gap: 0.75rem; }
+  .portal-link {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding: 0.9rem 1.5rem; border-radius: 4px;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.03em;
+    text-decoration: none; white-space: nowrap;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .portal-link:hover { transform: translateY(-1px); }
+  .portal-link-primary {
+    background: var(--forest); color: var(--cream);
+  }
+  .portal-link-primary:hover { background: var(--forest-mid); }
+  .portal-link-secondary {
+    background: transparent; color: var(--forest);
+    border: 1.5px solid var(--sage-mid);
+  }
+  .portal-link-secondary:hover { border-color: var(--forest); background: var(--sage); }
+
+  .portal-items { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .portal-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-size: 0.85rem; color: var(--slate);
+  }
+  .portal-item::before {
+    content: ''; width: 5px; height: 5px; border-radius: 50%;
+    background: var(--forest-light); flex-shrink: 0;
+  }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--white); }
+
+  .contact-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    margin-top: 3rem; align-items: start;
+  }
+
+  .contact-block { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-row { display: flex; gap: 1rem; align-items: flex-start; }
+  .contact-icon {
+    width: 36px; height: 36px; flex-shrink: 0; border-radius: 3px;
+    background: var(--sage); display: flex; align-items: center; justify-content: center;
+    color: var(--forest); font-size: 1rem;
+  }
+  .contact-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.2rem; }
+  .contact-value { font-size: 0.9rem; color: var(--slate); line-height: 1.5; }
+
+  .contact-divider {
+    width: 1px; background: var(--sage-mid); align-self: stretch;
+  }
+
+  .managed-box {
+    background: var(--sage); border-radius: 4px; padding: 2rem;
+    border-left: 3px solid var(--gold);
+  }
+  .managed-title { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--forest); margin-bottom: 0.5rem; }
+  .managed-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.2rem; color: var(--forest); font-weight: 600; margin-bottom: 0.5rem;
+  }
+  .managed-desc { font-size: 0.85rem; color: var(--slate); line-height: 1.6; margin-bottom: 1.25rem; }
+  .managed-link {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--forest); text-decoration: none;
+    border-bottom: 1.5px solid var(--gold); padding-bottom: 2px;
+    transition: color 0.2s;
+  }
+  .managed-link:hover { color: var(--forest-light); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--forest);
+    padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1rem; font-weight: 600; color: var(--cream);
+  }
+  .footer-copy { font-size: 0.75rem; color: rgba(245,242,238,0.4); }
+  .footer-links { display: flex; gap: 1.5rem; }
+  .footer-links a {
+    font-size: 0.75rem; color: rgba(245,242,238,0.5); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold-light); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-toggle { display: block; }
+    .nav-links.open {
+      display: flex; flex-direction: column; align-items: flex-start;
+      position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: rgba(30, 58, 47, 0.98); padding: 1.5rem 2rem;
+      gap: 1.25rem;
+    }
+    .hero-stats { display: none; }
+    .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .about-img-accent { display: none; }
+    .location-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .portal-card { grid-template-columns: 1fr; gap: 2rem; }
+    .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .contact-divider { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav role="navigation" aria-label="Main">
+  <a href="#hero" class="nav-brand">
+    <span class="nav-brand-top">Inwood at Great Notch</span>
+    <span class="nav-brand-sub">Little Falls, NJ</span>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#amenities">Amenities</a></li>
+    <li><a href="#location">Location</a></li>
+    <li><a href="gallery.html">Gallery</a></li>
+    <li><a href="#residents">Residents</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="https://portal.cp-management.com/public" target="_blank" rel="noopener" class="nav-cta">Resident Portal</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero" aria-label="Welcome">
+  <div class="hero-pattern" aria-hidden="true"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Little Falls, New Jersey</p>
+    <h1 class="hero-headline">
+      Inwood at<br /><em>Great Notch</em>
+    </h1>
+    <p class="hero-sub">
+      Townhouses and apartments nestled in a park-like setting — where natural surroundings meet
+      easy access to New York City and northern New Jersey.
+    </p>
+    <div class="hero-actions">
+      <a href="#about" class="btn-primary">Explore the Community</a>
+      <a href="https://portal.cp-management.com/public" target="_blank" rel="noopener" class="btn-outline">Resident Portal →</a>
+    </div>
+  </div>
+  <div class="hero-stats" aria-hidden="true">
+    <div class="stat">
+      <span class="stat-num">15&thinsp;min</span>
+      <span class="stat-label">to Lincoln Tunnel</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">NJ</span>
+      <span class="stat-label">Transit on foot</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-inner">
+    <p class="section-eyebrow">The Community</p>
+    <h2 class="section-title">Suburban living.<br />Urban convenience.</h2>
+    <div class="about-grid">
+      <div>
+        <p class="section-body">
+          Inwood at Great Notch offers an easy lifestyle with recreational amenities designed for
+          busy families — without the burden of time-consuming maintenance. The complex is
+          ideally situated at the juncture of Clifton, Little Falls, Cedar Grove, and Montclair,
+          adjacent to Garret Mountain Reservation.
+        </p>
+        <div class="about-features">
+          <div class="feature-row"><span class="feature-dot"></span>Townhouses and apartment-style residences</div>
+          <div class="feature-row"><span class="feature-dot"></span>Pool membership, tennis &amp; basketball courts</div>
+          <div class="feature-row"><span class="feature-dot"></span>Children's play areas throughout the grounds</div>
+          <div class="feature-row"><span class="feature-dot"></span>Professionally managed community</div>
+          <div class="feature-row"><span class="feature-dot"></span>Walk to NJ Transit commuter bus line</div>
+        </div>
+      </div>
+      <div class="about-img-wrap">
+        <div class="about-img-accent" aria-hidden="true"></div>
+        <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-entrance.jpg" alt="Inwood at Great Notch entrance" style="width:100%; aspect-ratio:4/3; object-fit:cover; border-radius:4px; position:relative; z-index:1; display:block;" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── AMENITIES ── -->
+<section id="amenities">
+  <div class="section-inner">
+    <p class="section-eyebrow">Amenities</p>
+    <h2 class="section-title">Everything you need, right outside your door.</h2>
+    <div class="amenities-grid">
+
+      <div class="amenity-card">
+        <div class="amenity-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 8c0-2.2 1.8-4 4-4h8c2.2 0 4 1.8 4 4v4H4V8z"/><rect x="2" y="12" width="20" height="4" rx="1"/><path d="M6 16v3M18 16v3"/>
+          </svg>
+        </div>
+        <p class="amenity-name">Swimming Pool</p>
+        <p class="amenity-desc">Seasonal pool membership available to all residents — perfect for summer afternoons.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+          </svg>
+        </div>
+        <p class="amenity-name">Tennis Courts</p>
+        <p class="amenity-desc">On-site tennis courts available for residents to enjoy year-round.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="5" r="2"/><path d="M10.5 8.5L9 15l3 2 3-2-1.5-6.5"/><path d="M6 20l3-5M18 20l-3-5"/>
+          </svg>
+        </div>
+        <p class="amenity-name">Basketball Court</p>
+        <p class="amenity-desc">Full-size court for pickup games and active recreation.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+        </div>
+        <p class="amenity-name">Park-Like Grounds</p>
+        <p class="amenity-desc">Beautifully landscaped common areas adjacent to Garret Mountain Reservation.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <p class="amenity-name">Managed Community</p>
+        <p class="amenity-desc">Professionally managed by CP Management with an easy online resident portal.</p>
+      </div>
+
+      <div class="amenity-card">
+        <div class="amenity-icon" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>
+          </svg>
+        </div>
+        <p class="amenity-name">Children's Play Areas</p>
+        <p class="amenity-desc">Safe, welcoming play spaces designed for families with young children.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── GALLERY PREVIEW ── -->
+<section id="gallery-preview" style="background:var(--white); padding-top:0; padding-bottom:clamp(4rem,8vw,7rem);">
+  <div class="section-inner">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:1rem; margin-bottom:2rem;">
+      <div>
+        <p class="section-eyebrow">Photo Gallery</p>
+        <h2 class="section-title" style="margin-bottom:0;">A look around the community.</h2>
+      </div>
+      <a href="gallery.html" class="btn-primary">View Full Gallery</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:auto auto; gap:10px;">
+      <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-grounds.jpg" alt="Inwood grounds" style="width:100%; aspect-ratio:1/1; object-fit:cover; border-radius:4px; grid-column:1/3; grid-row:1/2; aspect-ratio:16/9;" />
+      <img src="http://www.inwoodatgreatnotch.com/img-gallery/pool.jpg" alt="Inwood pool" style="width:100%; object-fit:cover; border-radius:4px; aspect-ratio:1/1;" />
+      <img src="http://www.inwoodatgreatnotch.com/img-gallery/tennis.jpg" alt="Tennis courts" style="width:100%; object-fit:cover; border-radius:4px; aspect-ratio:1/1;" />
+      <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-entrance-2.jpg" alt="Inwood entrance" style="width:100%; object-fit:cover; border-radius:4px; aspect-ratio:1/1;" />
+      <img src="http://www.inwoodatgreatnotch.com/img-gallery/living-at-inwood.jpg" alt="Living at Inwood" style="width:100%; object-fit:cover; border-radius:4px; aspect-ratio:1/1;" />
+      <img src="http://www.inwoodatgreatnotch.com/img-gallery/inwood-grounds-4.jpg" alt="Inwood grounds" style="width:100%; object-fit:cover; border-radius:4px; grid-column:3/5; grid-row:2/3; aspect-ratio:16/9;" />
+    </div>
+  </div>
+</section>
+
+<!-- ── LOCATION ── -->
+<section id="location">
+  <div class="section-inner">
+    <p class="section-eyebrow">Getting Here</p>
+    <h2 class="section-title">Conveniently connected to everything.</h2>
+    <p class="section-body">
+      Nestled in suburbia but with the pulse of the metro right at your fingertips —
+      Inwood is one of northern New Jersey's best-kept location secrets.
+    </p>
+    <div class="location-grid">
+      <div class="location-cards">
+
+        <div class="location-card">
+          <div class="location-card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+          </div>
+          <div>
+            <p class="location-card-title">Lincoln Tunnel</p>
+            <p class="location-card-body">15 minutes by car — one of the fastest commutes to Midtown Manhattan in all of NJ.</p>
+          </div>
+        </div>
+
+        <div class="location-card">
+          <div class="location-card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 17l2-8h12l2 8H4z"/><path d="M4 17H2v2h20v-2h-2"/><circle cx="7.5" cy="17" r="1.5"/><circle cx="16.5" cy="17" r="1.5"/><path d="M8 9h8"/>
+            </svg>
+          </div>
+          <div>
+            <p class="location-card-title">NJ Transit Bus</p>
+            <p class="location-card-body">Walk directly to the NJ Transit commuter bus line — no car needed for your NYC commute.</p>
+          </div>
+        </div>
+
+        <div class="location-card">
+          <div class="location-card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 10c0-5.5 14-5.5 14 0v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-7z"/><path d="M8 19v2M16 19v2M4 14h16"/>
+            </svg>
+          </div>
+          <div>
+            <p class="location-card-title">NJ Transit Train</p>
+            <p class="location-card-body">A short drive to the NJ Transit train line for additional commute options.</p>
+          </div>
+        </div>
+
+        <div class="location-card">
+          <div class="location-card-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <p class="location-card-title">Garret Mountain</p>
+            <p class="location-card-body">Adjacent to Garret Mountain Reservation — hiking, trails, and open green space steps away.</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:0.75rem;">
+        <div style="border-radius:6px; overflow:hidden; border:1px solid rgba(200,169,110,0.2); flex-shrink:0;">
+          <iframe
+            title="Inwood at Great Notch map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3018.5!2d-74.2255!3d40.8782!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2fdf5a1234567%3A0xabcdef1234567890!2s181+Long+Hill+Rd%2C+Little+Falls%2C+NJ+07424!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+            width="100%"
+            height="340"
+            style="display:block; border:0; filter:saturate(0.7) brightness(0.88);"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <a
+          href="https://maps.google.com/?q=181+Long+Hill+Road+Little+Falls+NJ+07424"
+          target="_blank"
+          rel="noopener"
+          style="display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; font-weight:500; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold-light); text-decoration:none; opacity:0.8; transition:opacity 0.2s;"
+          onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open in Google Maps
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── RESIDENTS PORTAL ── -->
+<section id="residents">
+  <div class="section-inner">
+    <p class="section-eyebrow">Residents</p>
+    <h2 class="section-title">Everything for shareholders &amp; residents.</h2>
+    <div class="portal-card">
+      <div>
+        <p class="section-body">Submit maintenance requests, pay assessments, access board notices, meeting minutes, and community forms — all through the CP Management resident portal or the resources below.</p>
+        <div class="portal-items">
+          <div class="portal-item">Current notices &amp; announcements</div>
+          <div class="portal-item">Board meeting minutes</div>
+          <div class="portal-item">Inside Inwood newsletter</div>
+          <div class="portal-item">Shareholder forms &amp; documents</div>
+          <div class="portal-item">Board member directory</div>
+        </div>
+      </div>
+      <div class="portal-links">
+        <a href="https://portal.cp-management.com/public" target="_blank" rel="noopener" class="portal-link portal-link-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Open Resident Portal
+        </a>
+        <a href="http://www.inwoodatgreatnotch.com/shareHolders/notices.shtml" target="_blank" rel="noopener" class="portal-link portal-link-secondary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:0.5;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Current Notices
+        </a>
+        <a href="http://www.inwoodatgreatnotch.com/shareHolders/minutes.shtml" target="_blank" rel="noopener" class="portal-link portal-link-secondary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:0.5;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Meeting Minutes
+        </a>
+        <a href="http://www.inwoodatgreatnotch.com/shareHolders/forms.shtml" target="_blank" rel="noopener" class="portal-link portal-link-secondary">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="opacity:0.5;flex-shrink:0;"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Shareholder Forms
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-eyebrow">Contact</p>
+    <h2 class="section-title">Get in touch.</h2>
+    <div class="contact-grid">
+
+      <div class="contact-block">
+        <div class="contact-row">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <p class="contact-label">Address</p>
+            <p class="contact-value">181 Long Hill Road<br />Little Falls, NJ 07424</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <p class="contact-label">Neighborhood</p>
+            <p class="contact-value">At the juncture of Clifton, Little Falls,<br />Cedar Grove &amp; Montclair</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.15 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.05 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/></svg>
+          </div>
+          <div>
+            <p class="contact-label">Inquiries</p>
+            <p class="contact-value">
+              <a href="http://www.inwoodatgreatnotch.com/cgi-bin/contact.cgi?page=inquires" target="_blank" rel="noopener" style="color:var(--forest); font-weight:500;">
+                Submit an inquiry →
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="managed-box">
+          <p class="managed-title">Property Management</p>
+          <p class="managed-name">CP Management</p>
+          <p class="managed-desc">
+            Inwood at Great Notch is professionally managed by CP Management.
+            For maintenance requests, billing, or issues related to your home or the community,
+            use the resident portal.
+          </p>
+          <a href="https://portal.cp-management.com/public" target="_blank" rel="noopener" class="managed-link">
+            Open Resident Portal ↗
+          </a>
+          &nbsp;&nbsp;
+          <a href="https://www.cp-management.com/" target="_blank" rel="noopener" class="managed-link" style="margin-left:0.5rem;">
+            CP Management Website ↗
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div>
+    <p class="footer-brand">Inwood at Great Notch</p>
+    <p class="footer-copy">181 Long Hill Road · Little Falls, NJ 07424</p>
+  </div>
+  <div class="footer-links">
+    <a href="https://portal.cp-management.com/public" target="_blank" rel="noopener">Resident Portal</a>
+    <a href="https://www.cp-management.com/" target="_blank" rel="noopener">CP Management</a>
+    <a href="http://www.inwoodatgreatnotch.com/cgi-bin/contact.cgi?page=inquires" target="_blank" rel="noopener">Contact</a>
+  </div>
+  <p class="footer-copy">© 2024 Inwood at Great Notch</p>
+</footer>
+
+<script>
+const toggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => navLinks.classList.remove('open'));
+});
+</script>
+
+</body>
+</html>
